@@ -1,0 +1,33 @@
+import boto3
+import json
+
+client = boto3.client('iot-data', region_name='eu-central-1')
+
+print('Loading function')
+
+def respond():
+    return {
+        'statusCode': '200',
+        'body': '',
+        'headers': {
+            'Content-Type': 'application/json',
+        },
+    }
+
+def lambda_handler(event, context):
+
+    pay = event['body']
+    
+    response = client.publish(
+        topic='rbx/command',
+        qos=1,
+        payload=pay
+    )
+    
+    return {
+        'statusCode': '200',
+        'body': '',
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    }
